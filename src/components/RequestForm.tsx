@@ -2,7 +2,7 @@
 
 import { useId, useRef, useState, type FormEvent, type RefObject } from "react";
 
-const FIELD_ORDER = ["contact", "phone", "reward"] as const;
+const FIELD_ORDER = ["contactPerson", "contactPhone", "rewardExpectation"] as const;
 
 type FieldName = (typeof FIELD_ORDER)[number];
 
@@ -10,36 +10,36 @@ type FormValues = Record<FieldName, string>;
 
 type FormErrors = Partial<Record<FieldName, string>>;
 
-const EMPTY_VALUES: FormValues = { contact: "", phone: "", reward: "" };
+const EMPTY_VALUES: FormValues = { contactPerson: "", contactPhone: "", rewardExpectation: "" };
 
 const FIELD_LABELS: Record<FieldName, string> = {
-  contact: "Контактное лицо",
-  phone: "Телефон для связи",
-  reward: "Вознаграждение за наводку",
+  contactPerson: "Контактное лицо",
+  contactPhone: "Телефон для связи",
+  rewardExpectation: "Вознаграждение за наводку",
 };
 
 const FIELD_PLACEHOLDERS: Record<FieldName, string> = {
-  contact: "Имя и фамилия",
-  phone: "+7 900 000-00-00",
-  reward: "Например: обсуждаемо после сверки",
+  contactPerson: "Имя и фамилия",
+  contactPhone: "+7 900 000-00-00",
+  rewardExpectation: "Например: обсуждаемо после сверки",
 };
 
 const FIELD_HINTS: Record<FieldName, string> = {
-  contact: "Как к вам обращаться в разговоре по делу.",
-  phone: "Только для звонка по этому запросу, третьим лицам не передаём.",
-  reward: "Ваше ожидание: сумма, доля или «обсуждаемо».",
+  contactPerson: "Как к вам обращаться в разговоре по делу.",
+  contactPhone: "Только для звонка по этому запросу, третьим лицам не передаём.",
+  rewardExpectation: "Ваше ожидание: сумма, доля или «обсуждаемо».",
 };
 
 function validateField(name: FieldName, rawValue: string): string | undefined {
   const value = rawValue.trim();
 
-  if (name === "contact") {
+  if (name === "contactPerson") {
     if (value.length === 0) return "Укажите контактное лицо.";
     if (value.length < 2) return "Слишком коротко: минимум 2 символа.";
     return undefined;
   }
 
-  if (name === "phone") {
+  if (name === "contactPhone") {
     if (value.length === 0) return "Без телефона мы не сможем связаться.";
     if (!/^[+\d][\d\s()-]*$/.test(value)) {
       return "Допустимы цифры, пробелы, «+», скобки и дефисы.";
@@ -59,14 +59,14 @@ function validateField(name: FieldName, rawValue: string): string | undefined {
 
 export default function RequestForm() {
   const uid = useId();
-  const contactRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const rewardRef = useRef<HTMLInputElement>(null);
+  const contactPersonRef = useRef<HTMLInputElement>(null);
+  const contactPhoneRef = useRef<HTMLInputElement>(null);
+  const rewardExpectationRef = useRef<HTMLInputElement>(null);
 
   const refs: Record<FieldName, RefObject<HTMLInputElement | null>> = {
-    contact: contactRef,
-    phone: phoneRef,
-    reward: rewardRef,
+    contactPerson: contactPersonRef,
+    contactPhone: contactPhoneRef,
+    rewardExpectation: rewardExpectationRef,
   };
 
   const [values, setValues] = useState<FormValues>(EMPTY_VALUES);
@@ -121,7 +121,7 @@ export default function RequestForm() {
     setErrors({});
     setSent(false);
     // Форма монтируется заново, поэтому фокус ставим после обновления состояния.
-    setTimeout(() => contactRef.current?.focus(), 0);
+    setTimeout(() => contactPersonRef.current?.focus(), 0);
   }
 
   if (sent) {
@@ -188,9 +188,11 @@ export default function RequestForm() {
                 ref={refs[name]}
                 className="input"
                 name={name}
-                type={name === "phone" ? "tel" : "text"}
-                inputMode={name === "phone" ? "tel" : undefined}
-                autoComplete={name === "contact" ? "name" : name === "phone" ? "tel" : "off"}
+                type={name === "contactPhone" ? "tel" : "text"}
+                inputMode={name === "contactPhone" ? "tel" : undefined}
+                autoComplete={
+                  name === "contactPerson" ? "name" : name === "contactPhone" ? "tel" : "off"
+                }
                 placeholder={FIELD_PLACEHOLDERS[name]}
                 value={values[name]}
                 onChange={(event) => handleChange(name, event.target.value)}
