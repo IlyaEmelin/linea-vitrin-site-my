@@ -181,9 +181,6 @@ export default function RequestForm() {
             <div className="field" key={name}>
               <label className="field__label" htmlFor={inputId}>
                 {FIELD_LABELS[name]}
-                <span className="field__required" aria-hidden="true">
-                  *
-                </span>
               </label>
 
               <input

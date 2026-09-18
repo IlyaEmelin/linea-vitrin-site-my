@@ -242,30 +242,26 @@ a {
   border: 10px solid #e9e1d2;
   border-radius: 6px;
   box-shadow: inset 0 0 0 1px #d3c8b5;
-  background:
-    linear-gradient(
-      178deg,
-      transparent 60%,
-      rgba(52, 60, 47, 0.86) 60.4%,
-      rgba(38, 44, 35, 0.96) 100%
-    ),
-    linear-gradient(
-      162deg,
-      transparent 44%,
-      rgba(101, 112, 96, 0.78) 44.4%,
-      rgba(72, 82, 68, 0.92) 100%
-    ),
-    linear-gradient(180deg, #e0e8ea 0%, #d2dbdb 46%, #bcc6bf 100%);
+  background: #e6e0d4;
 }
 
+.plate__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Лёгкая виньетка, чтобы полотно читалось как предмет в раме. */
 .plate__frame::after {
   content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.32) 0%,
-    rgba(33, 31, 28, 0.16) 100%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(33, 31, 28, 0.14) 100%
   );
 }
 

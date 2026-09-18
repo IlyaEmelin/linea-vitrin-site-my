@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import RequestForm from "@/components/RequestForm";
 
 const NAV = [
@@ -87,7 +89,7 @@ export default function Home() {
                 </h1>
                 <p className="lead">
                   Закрытая галерея принимает первичные обращения по делу о картине без
-                  происхождения. Показываем работу сдержанно: нам нужны не догадки и не оценки,
+                  происхождения. Нам нужны не догадки и не оценки,
                   а факты о том, где она находилась и у кого.
                 </p>
               </div>
@@ -122,12 +124,21 @@ export default function Home() {
 
             <figure className="plate">
               <div className="plate__frame">
-                <span className="plate__tag">фрагмент</span>
+                <Image
+                  className="plate__image"
+                  src="/pomeste-v-gorah.jpg"
+                  alt="Картина «Поместье в горах»: горная деревня с церковью у воды, лодка на каменистом берегу"
+                  width={1280}
+                  height={960}
+                  sizes="(max-width: 900px) 100vw, 520px"
+                  preload
+                />
+                <span className="plate__tag">полотно</span>
               </div>
               <figcaption className="plate__caption">
                 <span className="plate__title">«Поместье в горах»</span>
                 <span className="plate__meta">
-                  Холст, масло. Показан фрагмент: полное изображение и оборот — по запросу.
+                  Холст, масло. Оборот, ярлык и следы крепления — по запросу.
                 </span>
               </figcaption>
             </figure>
@@ -184,7 +195,6 @@ export default function Home() {
               <div className="card">
                 <h3 className="card__title">Первичный запрос по делу</h3>
                 <p className="card__lead">
-                  Поля со звёздочкой обязательны. Для первого обращения больше ничего не нужно.
                 </p>
                 <RequestForm />
               </div>
